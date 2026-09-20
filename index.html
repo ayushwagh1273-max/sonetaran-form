@@ -7,6 +7,102 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  /* Previous branch contact question */
+  .previous-contact{
+    margin:18px 26px 4px;
+    background:#FFFDF8;
+    border:1.5px solid var(--line);
+    border-radius:14px;
+    padding:14px 16px;
+  }
+
+  .previous-contact-title{
+    font-size:14px;
+    font-weight:600;
+    color:var(--ink);
+    margin-bottom:12px;
+    line-height:1.5;
+  }
+
+  .yes-no-options{
+    display:flex;
+    gap:12px;
+  }
+
+  .yes-no-option{
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:var(--gold-pale);
+    border:1px solid #ecd8a2;
+    border-radius:10px;
+    padding:10px 12px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+  }
+
+  .yes-no-option input{
+    width:18px;
+    height:18px;
+    accent-color:var(--maroon);
+    cursor:pointer;
+  }
+
+  .reason-wrap{
+    display:none;
+    margin-top:12px;
+  }
+
+  .reason-wrap.show{
+    display:block;
+  }
+
+  .reason-wrap label{
+    display:block;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--ink);
+    margin-bottom:6px;
+  }
+
+  .reason-wrap textarea{
+    width:100%;
+    min-height:85px;
+    resize:vertical;
+    padding:11px 12px;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    background:#fffdf8;
+    font-family:inherit;
+    font-size:14px;
+    color:var(--ink);
+    outline:none;
+  }
+
+  .reason-wrap textarea:focus{
+    border-color:var(--gold);
+    box-shadow:0 0 0 4px rgba(216,162,29,0.15);
+    background:#fff;
+  }
+
+  /* Disclaimer */
+  .disclaimer{
+    margin:18px 26px 4px;
+    background:#FFF8EC;
+    border:1.5px solid var(--gold);
+    border-left:5px solid var(--maroon);
+    border-radius:12px;
+    padding:13px 15px;
+    font-size:12.5px;
+    line-height:1.6;
+    color:var(--ink);
+  }
+
+  .disclaimer strong{
+    color:var(--maroon-dark);
+  }
   :root{
     --maroon: #A31E24;
     --maroon-dark: #7d151a;
@@ -553,6 +649,57 @@
         चुकीची माहिती भरली गेल्यास ती दुरूस्त (एडिट) करण्याऐवजी, पुन्हा एकदा स्वतंत्र फॉर्म सबमिट करावा.
       </ol>
     </div>
+    <!-- मागील शाखा संपर्काची माहिती -->
+<div class="previous-contact">
+
+  <div class="previous-contact-title">
+    तुम्ही यापूर्वी आमच्या शाखेशी संपर्क साधला होता का?
+    <span style="color:var(--maroon);">*</span>
+  </div>
+
+  <div class="yes-no-options">
+
+    <label class="yes-no-option">
+      <input type="radio"
+             name="previousContact"
+             value="होय"
+             id="previousYes">
+      <span>होय (Yes)</span>
+    </label>
+
+    <label class="yes-no-option">
+      <input type="radio"
+             name="previousContact"
+             value="नाही"
+             id="previousNo">
+      <span>नाही (No)</span>
+    </label>
+
+  </div>
+
+  <!-- होय निवडल्यानंतर दिसणारा कारणाचा बॉक्स -->
+  <div class="reason-wrap" id="reasonWrap">
+
+    <label for="loanReason">
+      कर्ज मिळाले नसल्यास कारण नमूद करा
+    </label>
+
+    <textarea
+      id="loanReason"
+      name="loanReason"
+      placeholder="कर्ज न मिळण्याचे कारण येथे लिहा..."></textarea>
+
+  </div>
+
+</div>
+
+<!-- Disclaimer -->
+<div class="disclaimer">
+  <strong>Disclaimer:</strong>
+  ही केवळ प्राथमिक नोंदणी आहे. सोने तारण कर्जाची अंतिम प्रक्रिया
+  बँकेच्या अधिकृत शाखेत, संपूर्ण KYC पडताळणी व सोन्याच्या शुद्धतेच्या
+  तपासणीनंतरच होईल.
+</div>
 
     <form id="goldLoanForm" novalidate>
       <div class="row2">
@@ -681,6 +828,24 @@
 </form>
 
 <script>
+  // मागील शाखा संपर्क - कारणाचा बॉक्स दाखवणे / लपवणे
+const previousYes = document.getElementById("previousYes");
+const previousNo = document.getElementById("previousNo");
+const reasonWrap = document.getElementById("reasonWrap");
+const loanReason = document.getElementById("loanReason");
+
+previousYes.addEventListener("change", function () {
+  if (this.checked) {
+    reasonWrap.classList.add("show");
+  }
+});
+
+previousNo.addEventListener("change", function () {
+  if (this.checked) {
+    reasonWrap.classList.remove("show");
+    loanReason.value = "";
+  }
+});
 /* ===== Taluka -> Village data for Ahilyanagar (Ahmednagar) district =====
    Source: village lists compiled from publicly available taluka records.
    Some talukas (esp. Rahata, Pathardi, Parner) have very large real village
